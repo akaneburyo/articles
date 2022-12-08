@@ -4,9 +4,10 @@ on:
     branches:
       - main
       - feature/init_ci
-
-permissions:
-  contents: read
+env:
+  ARTICLE_API_URL: https://qiita.com/api/v2/items
+  ARTICLE_DIR: articles/
+  MAP_FILE_PATH: article_map
 
 jobs:
   post:
@@ -17,21 +18,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Get articles_map from atrifact
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          # github_token: ${{secrets.GITHUB_TOKEN}}
-          workflow: upload_articles.yml
-          name: articles_map
-
-      - run: cat articles_map.txt
-      - run: echo testtest.md,idhogehoge > articles_map.txt
-
-      # - run: ID_MAP=`cat readme.md`
-      # - run: sh upload_to_qiita.sh `
+      - name: Upload to Qiita
+        run: bash .github/workflows/upload_to_qiita.sh ${{ env.ARTICLE_DIR }} ${{ secrets.QIITA_ACCESS_TOKEN }} ${{ env.MAP_FILE_PATH }}
 
       - name: Update articles_map
-        uses: actions/upload-artifact@v3
-        with:
-          name: articles_map
-          path: articles_map.txt
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add ${{ env.MAP_FILE_PATH }}
+          git commit -m "actions: updated map file"
+          git push
