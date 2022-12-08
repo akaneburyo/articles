@@ -1,0 +1,33 @@
+name: Push to Qiita
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get articles_map from atrifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: post_to_qiita.yml
+          name: articles_map
+
+      - run: cat articles_map.txt
+      - run: echo testtest.md,idhogehoge > articles_map.txt
+
+      - name: Update articles_map
+        uses: actions/upload-artifact@v3
+        with:
+          name: articles_map
+          path: articles_map.txt
