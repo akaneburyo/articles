@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - feature/init_ci
 
 permissions:
   contents: read
@@ -19,12 +20,15 @@ jobs:
       - name: Get articles_map from atrifact
         uses: dawidd6/action-download-artifact@v2
         with:
-          github_token: ${{secrets.GITHUB_TOKEN}}
-          workflow: post_to_qiita.yml
+          # github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: upload_articles.yml
           name: articles_map
 
       - run: cat articles_map.txt
       - run: echo testtest.md,idhogehoge > articles_map.txt
+
+      # - run: ID_MAP=`cat readme.md`
+      # - run: sh upload_to_qiita.sh `
 
       - name: Update articles_map
         uses: actions/upload-artifact@v3
