@@ -26,16 +26,14 @@ for file in "${changes[@]}"; do
       >$CACHE_FILE_PATH
 
   if [ -z "$id" ]; then
-    echo push
     id=$(curl -v $ARTICLE_API_URL \
       -H "Content-Type: application/json; charset=UTF-8" \
       -H 'X-Accept: application/json' \
       -H "Authorization: Bearer ${TOKEN}" \
       -d @$CACHE_FILE_PATH |
       jq -r .id)
-    map="$map\n$file,${id}"
+    map+="$file,${id}\n"
   else
-    echo patch
     curl -X PATCH "$ARTICLE_API_URL/$id" \
       -H "Content-Type: application/json; charset=UTF-8" \
       -H 'X-Accept: application/json' \
@@ -45,5 +43,4 @@ for file in "${changes[@]}"; do
 
   rm $CACHE_FILE_PATH
 done
-
 echo "$map" >$MAP_PATH
