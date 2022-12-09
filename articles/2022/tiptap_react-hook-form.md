@@ -11,4 +11,8 @@ react-hook-form にどっぷり使っているのでいい感じに使いたい
 
 ## できたもの
 
+codesandbox はる
+
 ## 志半ばポイント
+
+onblur のあたり

@@ -43,4 +43,4 @@ for file in "${changes[@]}"; do
 
   rm $CACHE_FILE_PATH
 done
-echo "$map" >$MAP_PATH
+echo -e "$map" >$MAP_PATH
