@@ -1,0 +1,30 @@
+name: Push to Qiita
+on:
+  push:
+    branches:
+      - main
+      - feature/init_ci
+env:
+  ARTICLE_API_URL: https://qiita.com/api/v2/items
+  ARTICLE_DIR: articles/
+  MAP_FILE_PATH: article_map
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Upload to Qiita
+        run: bash .github/workflows/upload_to_qiita.sh ${{ env.ARTICLE_DIR }} ${{ secrets.QIITA_ACCESS_TOKEN }} ${{ env.MAP_FILE_PATH }}
+
+      - name: Update articles_map
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add ${{ env.MAP_FILE_PATH }}
+          git commit -m "actions: updated map file"
+          git push
