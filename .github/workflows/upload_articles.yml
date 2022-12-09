@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - feature/init_ci
 env:
   ARTICLE_API_URL: https://qiita.com/api/v2/items
   ARTICLE_DIR: articles/
