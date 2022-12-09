@@ -17,14 +17,24 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
       - name: Upload to Qiita
         run: bash .github/workflows/upload_to_qiita.sh ${{ env.ARTICLE_DIR }} ${{ secrets.QIITA_ACCESS_TOKEN }} ${{ env.MAP_FILE_PATH }}
+
+      - name: Diff
+        id: diff
+        run: |
+          git add -N .
+          git diff --name-only --exit-code
+        continue-on-error: true
 
       - name: Update articles_map
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add ${{ env.MAP_FILE_PATH }}
+          git add .
           git commit -m "actions: updated map file"
           git push
+        if: steps.diff.outcome == 'failure'

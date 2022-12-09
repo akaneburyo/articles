@@ -33,7 +33,7 @@ for file in "${changes[@]}"; do
       -H "Authorization: Bearer ${TOKEN}" \
       -d @$CACHE_FILE_PATH |
       jq -r .id)
-    map="$map\n$file,${id}"
+    map+="\n$file,${id}"
   else
     echo patch
     curl -X PATCH "$ARTICLE_API_URL/$id" \
@@ -45,5 +45,5 @@ for file in "${changes[@]}"; do
 
   rm $CACHE_FILE_PATH
 done
-
+echo "map = $map"
 echo "$map" >$MAP_PATH
