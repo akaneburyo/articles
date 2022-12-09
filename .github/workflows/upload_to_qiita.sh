@@ -8,7 +8,7 @@ readonly TOKEN=$2
 readonly MAP_PATH=$3
 
 # main
-readonly changes=($(git diff --name-only HEAD^ HEAD | grep -e "$ARTICLE_DIR".*\.md))
+readonly changes=($(git diff --name-only HEAD^ HEAD | grep -e "$ARTICLE_DIR.*\.md"))
 map=$(cat $MAP_PATH)
 
 for file in "${changes[@]}"; do

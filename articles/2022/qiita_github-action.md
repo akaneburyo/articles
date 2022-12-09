@@ -1,4 +1,4 @@
-<!-- title="GithubActionsからQiitaに自動投稿するスクリプトを作った" tag="Bash,ShellScript,GitHubActions" private="true" -->
+<!-- title="GithubActionsからQiitaに自動投稿するスクリプトを作った" tag="Bash,ShellScript,GitHubActions" private="false" -->
 
 ## はじめに
 
@@ -114,9 +114,7 @@ done
 一つ前の commit と差分をとり、`articles/`内にある`.md`のファイルに対して処理します。  
 記事のタイトルやタグなどは
 
-```html
-<!-- title="GithubActionsからQiitaに投稿するスクリプトを作った" tag="Bash,ShellScript,GitHubActions" private="true" -->
-```
+`<!-- title="GithubActionsからQiitaに投稿するスクリプトを作った" tag="Bash,ShellScript,GitHubActions" private="true" -->`
 
 ↑ のような形で md ファイル内に記載し、取得します。
 
