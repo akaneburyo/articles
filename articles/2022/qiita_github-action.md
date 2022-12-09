@@ -14,9 +14,11 @@ https://github.com/akaneburyo/articles/tree/main/.github/workflows
 
 ## 苦戦ポイント
 
-- 改行コードの扱い
-- sed(なにもわからん)
-- jq(なにもわからん)
+### 改行コードの扱い
+
+### sed(なにもわからん)
+
+### jq(なにもわからん)
 
 ---
 
